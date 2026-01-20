@@ -1,0 +1,11 @@
+docker run -p 5432:5432 --name memorieshub-local -e POSTGRES_USER=postgres -e POSTGRES_DB=memorieshub_local -e POSTGRES_PASSWORD=postgres -d postgres
+
+
+npx sequelize-cli model:generate --name User --attributes name:string,email:string,password:string
+npx sequelize-cli db:migrate
+
+
+
+
+Server initialisations steps :
+- run npx sequelize-cli db:migrate to create db tables

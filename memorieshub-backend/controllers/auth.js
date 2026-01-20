@@ -1,18 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-// const User = require('../models/User');
-
-// Tempory user db
-const users = [{
-  id: 1,
-  email: "test@mail.com",
-  password: bcrypt.hashSync("test")
-}]
+const { User } = require('../models/');
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  // const user = await User.findByEmail(email);
-  const user = users.find(u => u.email == email)
+  const user = await User.findOne({ where: { email } });
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
