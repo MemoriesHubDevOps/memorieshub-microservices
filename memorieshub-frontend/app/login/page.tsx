@@ -21,6 +21,16 @@ export default function LoginPage() {
     }
   };
 
+  const handleSignup = async () => {
+    try {
+      const token = await AuthService.signupAsync("user", email, password);
+      localStorage.setItem('token', token);
+      router.push('/home');
+    } catch (err) {
+      setError('An error occured while signing you up...');
+    }
+  };
+
   return (
     <div>
       <h2>Login</h2>
@@ -46,6 +56,7 @@ export default function LoginPage() {
         </div>
         <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">Login</button>
       </form>
+      <button onClick={handleSignup} className="border-blue-500 hover:border-blue-700 font-bold py-2 px-4 rounded cursor-pointer">Signup</button>
     </div>
   );
 }
