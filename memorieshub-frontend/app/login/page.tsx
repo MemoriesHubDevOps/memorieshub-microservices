@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axiosInstance from '@/src/utils/AxiosUtils';
+import AuthService from '@/src/services/AuthService';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -13,9 +13,9 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axiosInstance.post('/auth/login', { email, password });
-      localStorage.setItem('token', response.data.token);
-      router.push('/dashboard');
+      const token = await AuthService.loginAsync(email, password)
+      localStorage.setItem('token', token);
+      router.push('/home');
     } catch (err) {
       setError('Invalid email or password');
     }

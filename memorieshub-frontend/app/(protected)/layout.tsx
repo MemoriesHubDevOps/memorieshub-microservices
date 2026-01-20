@@ -1,6 +1,6 @@
 "use client";
 
-import axiosInstance from "@/src/utils/AxiosUtils";
+import AuthService from "@/src/services/AuthService";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ export default function ProtectedLayout({
   useEffect(() => {
     const checkTokenAsync = async () => {
       try {
-        await axiosInstance.get('/auth/validate-token');
+        await AuthService.verifyTokenAsync();
         setLoading(false);
       } catch (error) {
         router.push('/login');

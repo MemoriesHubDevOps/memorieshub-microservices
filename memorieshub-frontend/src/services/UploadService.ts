@@ -16,6 +16,6 @@ export default class UploadService {
             }
         );
 
-        return 'http://localhost:3300/api' + response.data.replace('\\', '/');
+        return process.env.NEXT_PUBLIC_SERVER_BASE_URL + response.data.replace('\\', '/');
     }
 }
