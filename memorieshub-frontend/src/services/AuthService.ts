@@ -9,6 +9,6 @@ export default class AuthService {
     }
 
     static verifyTokenAsync = async () => {
-        await axiosInstance.get('/auth/verify-token');
+        await axiosInstance.post('/auth/verify-token');
     }
 }

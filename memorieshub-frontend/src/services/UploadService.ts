@@ -9,7 +9,7 @@ export default class UploadService {
         formData.append('image', picture)
 
         const response = await axiosInstance.post(
-            '/upload',
+            '/memories/upload',
             formData,
             {
                 headers: { "Content-Type": "multipart/form-data" }
