@@ -1,4 +1,4 @@
-import http from "../utils/AxiosUtils"
+import axiosInstance from "../utils/AxiosUtils"
 
 
 export default class UploadService {
@@ -8,7 +8,7 @@ export default class UploadService {
         const formData = new FormData()
         formData.append('image', picture)
 
-        const response = await http.post(
+        const response = await axiosInstance.post(
             '/upload',
             formData,
             {
@@ -16,6 +16,6 @@ export default class UploadService {
             }
         );
 
-        return 'http://localhost:3300/' + response.data.replace('\\', '/');
+        return 'http://localhost:3300/api' + response.data.replace('\\', '/');
     }
 }
