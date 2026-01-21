@@ -13,11 +13,21 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const token = await AuthService.loginAsync(email, password)
+      const { token } = await AuthService.loginAsync(email, password)
       localStorage.setItem('token', token);
       router.push('/home');
     } catch (err) {
       setError('Invalid email or password');
+    }
+  };
+
+  const handleSignup = async () => {
+    try {
+      const { token } = await AuthService.signupAsync("user", email, password);
+      localStorage.setItem('token', token);
+      router.push('/home');
+    } catch (err) {
+      setError('An error occured while signing you up...');
     }
   };
 
@@ -44,7 +54,8 @@ export default function LoginPage() {
             required
           />
         </div>
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">Login</button>
+        <button type="submit" id="login" name="login" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded cursor-pointer">Login</button>
+        <button onClick={handleSignup} className="border-blue-500 hover:border-blue-700 font-bold py-2 px-4 rounded cursor-pointer">Signup</button>
       </form>
     </div>
   );
