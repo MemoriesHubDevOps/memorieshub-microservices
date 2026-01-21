@@ -1,11 +1,28 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import UploadService from "../../../src/services/UploadService";
+import axiosInstance from "@/src/utils/AxiosUtils";
 
 export default function Home() {
   const [picture, setPictureToUpload] = useState<File>();
   const [path, setPath] = useState<string>();
+  const [memories, setMemories] = useState<{id : number, s3_url: string, user_id: number}[]>();
+  const [error, setError] = useState<string>();
+
+  useEffect(() => {
+    const loadMemoriesAsync = async () => {
+      try {
+        const response = await axiosInstance.get('/memories');
+        setMemories(response.data);
+      } catch (error) {
+        setError('Error when loading your memories.')
+      }
+    };
+
+    loadMemoriesAsync();
+  }, []);
+
 
   const uploadPhotoAsync = async (event : ChangeEvent<HTMLInputElement>) => {
     
@@ -45,6 +62,17 @@ export default function Home() {
               :
               <div>No picture selected.</div>
           }
+
+
+          <div>
+            {error && <p className="text-red-500">{error}</p>}
+            {
+              !memories ?
+                'No memories found. Upload your first one now :)'
+              :
+                memories.map(memory => <div key={memory.id} className="border-2 border-b-fuchsia-800">{memory.id}</div>)
+            }
+          </div>
         </main>
       </div>
   );

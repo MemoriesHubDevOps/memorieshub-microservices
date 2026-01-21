@@ -9,7 +9,7 @@ exports.login = async (req, res) => {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
   const token = jwt.sign({ id: user.id }, process.env.EXPRESS_JWT_SECRET_KEY, { expiresIn: '1h' });
-  res.json({ token });
+  res.json({ user, token });
 };
 
 exports.signup = async (req, res) => {
@@ -22,7 +22,7 @@ exports.signup = async (req, res) => {
 
   const newUser = await User.create({name, email, password: bcrypt.hashSync(password)})
   const token = jwt.sign({ id: newUser.id }, process.env.EXPRESS_JWT_SECRET_KEY, { expiresIn: '1h' });
-  res.json({ newUser, token });
+  res.json({ user: newUser, token });
 };
 
 exports.verifyToken = async (req, res) => {

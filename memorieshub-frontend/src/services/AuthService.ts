@@ -5,7 +5,7 @@ export default class AuthService {
 
     static loginAsync = async (email : string, password: string) => {
         const response = await axiosInstance.post('/auth/login', { email, password });
-        return response.data.token;
+        return response.data;
     }
 
     static verifyTokenAsync = async () => {
@@ -14,6 +14,6 @@ export default class AuthService {
 
     static signupAsync = async (name : string, email: string, password: string) => {
         const response = await axiosInstance.post('/auth/signup', {name: Date.now(), email, password})
-        return response.data.token;
+        return response.data;
     }
 }
